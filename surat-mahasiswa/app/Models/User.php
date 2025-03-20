@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -19,9 +19,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'userable_id',
+        'userable_type',
     ];
 
     /**
@@ -46,6 +47,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
 
     public function userable()
     {

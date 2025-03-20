@@ -23,6 +23,13 @@ class LoginController extends Controller
     if ($user && Hash::check($password, $user->password)) {
         Auth::login($user);
 
+
+        // Pastikan nilai userable_type terbaca
+        if (!$user->userable_type) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors('Gagal login, role tidak ditemukan.');
+        }
+        
         // Redirect sesuai role
         if ($user->userable_type === 'Mahasiswa') {
             return redirect()->route('mahasiswa.dashboard');
