@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard Kaprodi</title>
 </head>
 <body>
     <h2>Selamat datang, {{ Auth::user()->email }}</h2>
@@ -14,6 +14,11 @@
         <li>User ID: {{ Auth::user()->id }}</li>
         <li>Userable ID: {{ Auth::user()->userable_id }}</li>
         <li>Tipe Pengguna: {{ Auth::user()->userable_type }}</li>
+    </ul>
+
+    <h3>Menu</h3>
+    <ul>
+        <li><a href="{{ route('kaprodi.surat.index') }}">Lihat Pengajuan Surat</a></li>
     </ul>
 
     <form action="{{ route('logout') }}" method="POST">
