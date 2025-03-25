@@ -9,7 +9,7 @@ class Karyawan extends Model
 {
     public function user()
     {
-        return $this->morphOne(\App\Models\User::class, 'userable');
+        return $this->morphOne(User::class, 'userable');
     }
 
     use HasFactory;

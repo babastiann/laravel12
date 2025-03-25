@@ -31,11 +31,11 @@ class LoginController extends Controller
         }
         
         // Redirect sesuai role
-        if ($user->userable_type === 'Mahasiswa') {
+        if ($user->userable_type === 'App\Models\Mahasiswa') {
             return redirect()->route('mahasiswa.dashboard');
-        } elseif ($user->userable_type === 'Kaprodi') {
+        } elseif ($user->userable_type === 'App\Models\Kaprodi') {
             return redirect()->route('kaprodi.dashboard');
-        } elseif ($user->userable_type === 'Karyawan') {
+        } elseif ($user->userable_type === 'App\Models\Karyawan') {
             return redirect()->route('karyawan.dashboard');
         } else {
             return redirect('/'); // Fallback jika user tidak memiliki tipe yang cocok

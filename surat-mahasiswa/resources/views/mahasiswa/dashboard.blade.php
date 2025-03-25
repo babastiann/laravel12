@@ -1,24 +1,60 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Selamat datang, {{ Auth::user()->email }}</h2>
+@extends('layouts.index')
 
-    <h3>Informasi Pengguna</h3>
-    <ul>
-        <li>Email: {{ Auth::user()->email }}</li>
-        <li>User ID: {{ Auth::user()->id }}</li>
-        <li>Userable ID: {{ Auth::user()->userable_id }}</li>
-        <li>Tipe Pengguna: {{ Auth::user()->userable_type }}</li>
-    </ul>
+@section('content')
+<div class="container mt-4">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title mb-3">Daftar Surat yang Diajukan</h3>
+
+            @if(isset($surat) && $surat->count() > 0)
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No</th>
+                            <th>Jenis Surat</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($surat as $key => $s)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $s->jenis_surat }}</td>
+                            <td>{{ $s->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <span class="badge 
+                                    @if ($s->status_surat == 'Disetujui') bg-success
+                                    @elseif ($s->status_surat == 'Ditolak') bg-danger
+                                    @else bg-secondary
+                                    @endif">
+                                    {{ $s->status_surat }}
+                                </span>
+                            </td>
+                            <td>
+                                @if ($s->status_surat == 'Disetujui')
+                                    <a href="{{ route('surat.download', $s->id) }}" class="btn btn-success btn-sm">Unduh</a>
+                                @elseif ($s->status_surat == 'Ditolak')
+                                    <a href="{{ route('surat.show', $s->id) }}" class="btn btn-warning btn-sm">Lihat Alasan</a>
+                                @else
+                                    <button class="btn btn-secondary btn-sm" disabled>Menunggu</button>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p class="text-center text-muted">Belum ada pengajuan surat.</p>
+            @endif
+        </div>
+    </div>
+</div>
+@endsection

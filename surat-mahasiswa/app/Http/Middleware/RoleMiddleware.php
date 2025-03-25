@@ -16,9 +16,14 @@ class RoleMiddleware
         }
 
         // Debugging: Cek apakah user memiliki role yang sesuai
-        if (Auth::user()->userable_type !== $role) {
+        if ($role === 'Mahasiswa' && Auth::user()->userable_type !== 'App\Models\Mahasiswa') {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        } elseif ($role === 'Kaprodi' && Auth::user()->userable_type !== 'App\Models\Kaprodi') {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        } elseif ($role === 'Karyawan' && Auth::user()->userable_type !== 'App\Models\Karyawan') {
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
+        
 
         return $next($request);
     }
