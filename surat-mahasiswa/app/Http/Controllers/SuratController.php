@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 // berfungsi untuk melihat dan mengunduh surat
 class SuratController extends Controller
 {
-    public function show($id)
+        public function index()
     {
-        $surat = Surat::findOrFail($id);
-        return view('surat-detail', compact('surat'));
+        $surat = Surat::all(); // Ambil semua surat
+        return view('surat.index', compact('surat'));
     }
 
     public function download($id)

@@ -9,7 +9,7 @@ class Surat extends Model
     use HasFactory;
 
     protected $table = 'surat'; // Nama tabel tetap 'surat'
-    protected $primaryKey = 'id_surat'; 
+    protected $primaryKey = 'id_surat';
 
     protected $fillable = [
         'tanggal_surat',
@@ -17,7 +17,7 @@ class Surat extends Model
         'nomor_surat',
         'file_surat',
         'nrp_mahasiswa',
-        'nik_kaprodi',
+        'nama',
         'detail_surat',
         'jenis_surat',
         'semester',
@@ -30,8 +30,4 @@ class Surat extends Model
         return $this->belongsTo(Mahasiswa::class, 'nrp_mahasiswa', 'nrp');
     }
 
-    public function kaprodi()
-    {
-        return $this->belongsTo(Karyawan::class, 'nik_kaprodi', 'nik');
-    }
 }

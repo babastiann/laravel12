@@ -26,7 +26,7 @@ class PengajuanController extends Controller
             'tanggal_surat' => now(),
             'status_surat' => 'diajukan',
             'nrp_mahasiswa' => auth()->user()->userable_id,
-            'nik_kaprodi' => $request->nik_kaprodi, // Simpan nik_kaprodi
+            'nama' => $request->nama,
             'jenis_surat' => $request->jenis_surat,
             'detail_surat' => $request->detail_surat,
             'semester' => $request->semester,
@@ -35,5 +35,11 @@ class PengajuanController extends Controller
         ]);
 
         return redirect()->route('mahasiswa.dashboard')->with('success', 'Pengajuan surat berhasil dikirim.');
+    }
+
+        public function index()
+    {
+        $surat = Surat::where('nrp_mahasiswa', auth()->user()->nrp)->get();
+        return view('mahasiswa.pengajuan.index', compact('surat'));
     }
 }

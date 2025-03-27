@@ -1,29 +1,84 @@
-{{-- <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Selamat datang, {{ Auth::user()->email }}</h2>
-
-    <h3>Informasi Pengguna</h3>
-    <ul>
-        <li>Email: {{ Auth::user()->email }}</li>
-        <li>User ID: {{ Auth::user()->id }}</li>
-        <li>Userable ID: {{ Auth::user()->userable_id }}</li>
-        <li>Tipe Pengguna: {{ Auth::user()->userable_type }}</li>
-    </ul>
-
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html> --}}
-
 @extends('layouts.index')
 
 @section('content')
+<div class="container mt-4">
+    <h3>Dashboard Kaprodi</h3>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="mb-3">Daftar Surat yang Diajukan</h4>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Mahasiswa</th>
+                        <th>Jenis Surat</th>
+                        <th>Tanggal Pengajuan</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($surat as $s)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $s->mahasiswa->nama }}</td>
+                        <td>{{ $s->jenis_surat }}</td>
+                        <td>{{ $s->created_at->format('Y-m-d') }}</td>
+                        <td>
+                            <span class="badge
+                                @if ($s->status_surat == 'diterima') bg-success
+                                @elseif ($s->status_surat == 'ditolak') bg-danger
+                                @else bg-secondary
+                                @endif">
+                                {{ $s->status_surat }}
+                            </span>
+                        </td>
+                        <td>
+                            @if ($s->status_surat == 'diajukan')
+                                <!-- Tombol Setujui -->
+                                <form action="{{ route('kaprodi.surat.approve', ['id' => $s->id_surat]) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Setujui</button>
+                                </form>
+
+                                <!-- Tombol Tolak -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $s->id_surat }}">
+                                    Tolak
+                                </button>
+
+                                <!-- Modal untuk Menolak Surat -->
+                                <div class="modal fade" id="rejectModal{{ $s->id_surat }}" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="rejectModalLabel">Tolak Surat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{{ route('kaprodi.surat.reject', ['id' => $s->id_surat]) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">Tolak Surat</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <span class="text-muted">Tidak ada aksi</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

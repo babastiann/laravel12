@@ -34,24 +34,29 @@
                     </select>
                 </div>
 
+                <div id="form-nama" class="mb-3">
+                    <label for="nama" class="form-label">Nama</label>
+                    <input required type="text" name="nama" id="nama" class="form-control">
+                </div>
+
                 <div id="form-semester" class="mb-3 d-none">
                     <label for="semester" class="form-label">Semester</label>
-                    <input type="number" name="semester" id="semester" class="form-control">
+                    <input required type="number" name="semester" id="semester" class="form-control">
                 </div>
 
                 <div id="form-kodeMK" class="mb-3 d-none">
                     <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>
-                    <input type="text" name="kode_mk" id="kode_mk" class="form-control">
+                    <input required type="text" name="kode_mk" id="kode_mk" class="form-control">
                 </div>
 
                 <div id="form-namaMK" class="mb-3 d-none">
                     <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
-                    <input type="text" name="nama_mk" id="nama_mk" class="form-control">
+                    <input required type="text" name="nama_mk" id="nama_mk" class="form-control">
                 </div>
 
                 <div id="form-detail" class="mb-3 d-none">
                     <label for="detail_surat" class="form-label">Detail Surat</label>
-                    <textarea name="detail_surat" id="detail_surat" class="form-control" rows="3"></textarea>
+                    <textarea required name="detail_surat" id="detail_surat" class="form-control" rows="3"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Ajukan Surat</button>
@@ -63,7 +68,7 @@
 <script>
     document.getElementById('jenis_surat').addEventListener('change', function () {
         let jenisSurat = this.value;
-        
+
         document.getElementById('form-semester').classList.add('d-none');
         document.getElementById('form-kodeMK').classList.add('d-none');
         document.getElementById('form-namaMK').classList.add('d-none');

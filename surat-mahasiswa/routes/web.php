@@ -6,13 +6,18 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\KaprodiController;
 use App\Models\Mahasiswa;
 use App\Models\Kaprodi;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
 
 // ✅ Route Login
 Route::get('/login', function () {
@@ -29,20 +34,28 @@ Route::middleware(['auth','role:Mahasiswa'])->group(function () {
     // 🔹 Route Pengajuan Surat (Mahasiswa)
     Route::get('/pengajuan/create', [PengajuanController::class, 'create'])->name('pengajuan.create');
     Route::post('/pengajuan', [PengajuanController::class, 'store'])->name('pengajuan.store');
+
+    // ✅ Route Menampilkan Daftar Surat yang Diajukan
+    Route::get('/mahasiswa/dashboard', [DashboardController::class, 'index'])->name('mahasiswa.dashboard');
 });
 
 // ✅ Route Manajemen Surat (Kaprodi & Karyawan)
 Route::middleware(['auth', 'role:Kaprodi,Karyawan'])->group(function () {
     Route::get('/surat/{id}', [SuratController::class, 'show'])->name('surat.show');
     Route::get('/surat/download/{id}', [SuratController::class, 'download'])->name('surat.download');
+    Route::get('/kaprodi/dashboard', [KaprodiController::class, 'dashboard'])->name('kaprodi.dashboard');
+    Route::post('/kaprodi/surat/{id}/approve', [KaprodiController::class, 'approve'])->name('kaprodi.surat.approve');
+    Route::post('/kaprodi/surat/{id}/reject', [KaprodiController::class, 'reject'])->name('kaprodi.surat.reject');
+
 });
 
 // ✅ Dashboard Kaprodi
 Route::middleware(['auth', 'role:Kaprodi'])->group(function () {
-    Route::get('/kaprodi/dashboard', function () {
-        return view('kaprodi.dashboard');
-    })->name('kaprodi.dashboard');
+    Route::get('/kaprodi/dashboard', [KaprodiController::class, 'dashboard'])->name('kaprodi.dashboard');
+    Route::post('/kaprodi/surat/{id}/approve', [KaprodiController::class, 'approve'])->name('kaprodi.surat.approve');
+    Route::post('/kaprodi/surat/{id}/reject', [KaprodiController::class, 'reject'])->name('kaprodi.surat.reject');
 });
+
 
 // ✅ Dashboard Karyawan
 Route::middleware(['auth', 'role:Karyawan'])->group(function () {

@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container mt-4">
+    <h3>Dashboard Mahasiswa</h3>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -10,9 +12,9 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <h3 class="card-title mb-3">Daftar Surat yang Diajukan</h3>
+            <h4 class="mb-3">Daftar Surat yang Diajukan</h4>
 
-            @if(isset($surat) && $surat->count() > 0)
+            @if($surat->count() > 0)
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -24,13 +26,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($surat as $key => $s)
+                        @foreach ($surat as $s)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $s->jenis_surat }}</td>
                             <td>{{ $s->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <span class="badge 
+                                <span class="badge
                                     @if ($s->status_surat == 'Disetujui') bg-success
                                     @elseif ($s->status_surat == 'Ditolak') bg-danger
                                     @else bg-secondary

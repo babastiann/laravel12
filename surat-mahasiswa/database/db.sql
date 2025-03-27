@@ -176,7 +176,7 @@ CREATE TABLE `surat` (
   `nomor_surat` varchar(50) DEFAULT NULL,
   `file_surat` varchar(255) DEFAULT NULL,
   `nrp_mahasiswa` varchar(20) DEFAULT NULL,
-  `nik_kaprodi` varchar(20) DEFAULT NULL,
+  `nama` varchar(100) NOT NULL,
   `detail_surat` text NOT NULL,
   `jenis_surat` enum('Pengantar Tugas','Keterangan Lulus','Laporan Hasil Studi','Keterangan Mahasiswa Aktif') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -189,27 +189,6 @@ CREATE TABLE `surat` (
 --
 -- Dumping data for table `surat`
 --
-
-INSERT INTO `surat` (`id_surat`, `tanggal_surat`, `status_surat`, `nomor_surat`, `file_surat`, `nrp_mahasiswa`, `nik_kaprodi`, `detail_surat`, `jenis_surat`, `created_at`, `updated_at`, `semester`, `kode_mk`, `nama_mk`) VALUES
-(1, '2025-03-24', 'diajukan', NULL, NULL, NULL, NULL, 'aaa', 'Pengantar Tugas', '2025-03-23 22:36:29', '2025-03-23 22:36:29', NULL, NULL, NULL),
-(2, '2025-03-24', 'diajukan', NULL, NULL, NULL, NULL, 'lulus', 'Laporan Hasil Studi', '2025-03-23 22:37:12', '2025-03-23 22:37:12', NULL, NULL, NULL),
-(3, '2025-03-24', 'diajukan', NULL, NULL, NULL, NULL, 'wakowakowakwoawa', 'Keterangan Lulus', '2025-03-23 23:40:45', '2025-03-23 23:40:45', NULL, NULL, NULL),
-(4, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'aaaaaa', 'Laporan Hasil Studi', '2025-03-24 19:52:34', '2025-03-24 19:52:34', NULL, NULL, NULL),
-(5, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'test', 'Laporan Hasil Studi', '2025-03-24 19:55:48', '2025-03-24 19:55:48', NULL, NULL, NULL),
-(6, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'test', 'Laporan Hasil Studi', '2025-03-24 19:58:27', '2025-03-24 19:58:27', NULL, NULL, NULL),
-(7, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'test 6', 'Keterangan Lulus', '2025-03-24 20:20:20', '2025-03-24 20:20:20', NULL, NULL, NULL),
-(8, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'syehan', 'Laporan Hasil Studi', '2025-03-24 20:20:39', '2025-03-24 20:20:39', NULL, NULL, NULL),
-(9, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'tesssss', 'Keterangan Mahasiswa Aktif', '2025-03-24 20:36:25', '2025-03-24 20:36:25', NULL, NULL, NULL),
-(10, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'aaaaaaps', 'Pengantar Tugas', '2025-03-24 20:36:33', '2025-03-24 20:36:33', NULL, NULL, NULL),
-(11, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'aaape', 'Keterangan Lulus', '2025-03-24 20:38:47', '2025-03-24 20:38:47', NULL, NULL, NULL),
-(12, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'test20', 'Keterangan Mahasiswa Aktif', '2025-03-24 22:53:19', '2025-03-24 22:53:19', NULL, NULL, NULL),
-(13, '2025-03-25', 'diajukan', NULL, NULL, NULL, NULL, 'test 21', 'Keterangan Lulus', '2025-03-24 22:58:55', '2025-03-24 22:58:55', NULL, NULL, NULL),
-(14, '2025-03-26', 'diajukan', NULL, NULL, NULL, NULL, 'pwl', 'Keterangan Lulus', '2025-03-26 01:26:45', '2025-03-26 01:26:45', NULL, NULL, NULL),
-(15, '2025-03-26', 'diajukan', NULL, NULL, NULL, NULL, 'testing euy rieut', 'Keterangan Mahasiswa Aktif', '2025-03-26 02:26:37', '2025-03-26 02:26:37', NULL, NULL, NULL),
-(16, '2025-03-26', 'diajukan', NULL, NULL, NULL, NULL, 'test semoga bisa', 'Keterangan Mahasiswa Aktif', '2025-03-26 02:29:20', '2025-03-26 02:29:20', NULL, NULL, NULL),
-(17, '2025-03-26', 'diajukan', NULL, NULL, NULL, NULL, 'aaaaa', 'Pengantar Tugas', '2025-03-26 02:32:15', '2025-03-26 02:32:15', NULL, 'IN240', 'PWL'),
-(18, '2025-03-26', 'diajukan', NULL, NULL, NULL, NULL, 'Lulus', 'Keterangan Lulus', '2025-03-26 02:33:36', '2025-03-26 02:33:36', NULL, NULL, NULL),
-(19, '2025-03-26', 'diajukan', NULL, NULL, '2372066', NULL, 'Aktif', 'Keterangan Mahasiswa Aktif', '2025-03-26 02:35:52', '2025-03-26 02:35:52', '1', NULL, NULL);
 
 -- --------------------------------------------------------
 
