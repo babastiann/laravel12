@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -21,4 +21,9 @@
         <button type="submit">Logout</button>
     </form>
 </body>
-</html>
+</html> --}}
+
+@extends('layouts.index')
+
+@section('content')
+@endsection

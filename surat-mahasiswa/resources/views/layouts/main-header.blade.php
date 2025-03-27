@@ -337,7 +337,8 @@
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Hizrian</span>
+                      <span class="fw-bold">{{ Auth::user()->mahasiswa->nama ?? Auth::user()->kaprodi->nama ?? Auth::user()->karyawan->nama ?? 'Nama tidak ditemukan' }}</span>
+                    </span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">

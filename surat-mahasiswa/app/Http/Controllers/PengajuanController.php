@@ -25,10 +25,13 @@ class PengajuanController extends Controller
         Surat::create([
             'tanggal_surat' => now(),
             'status_surat' => 'diajukan',
-            'nrp_mahasiswa' => auth()->user()->nrp_nik,
+            'nrp_mahasiswa' => auth()->user()->userable_id,
             'nik_kaprodi' => $request->nik_kaprodi, // Simpan nik_kaprodi
             'jenis_surat' => $request->jenis_surat,
             'detail_surat' => $request->detail_surat,
+            'semester' => $request->semester,
+            'kode_mk' => $request->kode_mk,
+            'nama_mk'=> $request->nama_mk
         ]);
 
         return redirect()->route('mahasiswa.dashboard')->with('success', 'Pengajuan surat berhasil dikirim.');

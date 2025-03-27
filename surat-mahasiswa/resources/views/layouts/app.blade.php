@@ -21,5 +21,6 @@
     <footer>
         <p>&copy; {{ date('Y') }} Aplikasi Surat Mahasiswa</p>
     </footer>
+    <script src="{{ asset('js/surat.js') }}"></script>
 </body>
 </html>

@@ -49,7 +49,11 @@ class User extends Authenticatable
     }
 
 
-
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class, 'nrp', 'userable_id');
+    }
+    
     public function userable()
     {
         return $this->morphTo();

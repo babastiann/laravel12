@@ -1,31 +1,84 @@
-@extends('layouts.app')
-
-@section('title', 'Ajukan Surat')
+@extends('layouts.index')
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold mb-4">Form Pengajuan Surat</h2>
-    <form action="{{ route('surat.store') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="jenis_surat" class="block text-sm font-medium text-gray-700">Jenis Surat</label>
-            <select name="jenis_surat" id="jenis_surat" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                <option value="Pengantar Tugas">Pengantar Tugas</option>
-                <option value="Keterangan Lulus">Keterangan Lulus</option>
-                <option value="Laporan Hasil Studi">Laporan Hasil Studi</option>
-                <option value="Keterangan Mahasiswa Aktif">Keterangan Mahasiswa Aktif</option>
-            </select>
-        </div>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title mb-3">Ajukan Surat</h3>
 
-        <div class="mb-4">
-            <label for="detail_surat" class="block text-sm font-medium text-gray-700">Detail Surat</label>
-            <textarea name="detail_surat" id="detail_surat" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
-        </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        <div class="mb-4">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Ajukan Surat</button>
+            <form action="{{ route('pengajuan.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="nik_kaprodi" value="{{ $kaprodi->nik ?? '' }}">
+                <input type="hidden" name="nrp" id="nrp" value="{{ auth()->user()->nrp ?? '' }}">
+                <input type="hidden" name="nama" id="nama" value="{{ auth()->user()->nama ?? '' }}">
+
+                <div class="mb-3">
+                    <label for="jenis_surat" class="form-label">Jenis Surat</label>
+                    <select name="jenis_surat" id="jenis_surat" class="form-control" required>
+                        <option value="">-- Pilih Jenis Surat --</option>
+                        <option value="Keterangan Mahasiswa Aktif">Surat Keterangan Mahasiswa Aktif</option>
+                        <option value="Pengantar Tugas">Surat Pengantar Tugas Mata Kuliah</option>
+                        <option value="Keterangan Lulus">Surat Keterangan Lulus</option>
+                        <option value="Laporan Hasil Studi">Laporan Hasil Studi</option>
+                    </select>
+                </div>
+
+                <div id="form-semester" class="mb-3 d-none">
+                    <label for="semester" class="form-label">Semester</label>
+                    <input type="number" name="semester" id="semester" class="form-control">
+                </div>
+
+                <div id="form-kodeMK" class="mb-3 d-none">
+                    <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>
+                    <input type="text" name="kode_mk" id="kode_mk" class="form-control">
+                </div>
+
+                <div id="form-namaMK" class="mb-3 d-none">
+                    <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
+                    <input type="text" name="nama_mk" id="nama_mk" class="form-control">
+                </div>
+
+                <div id="form-detail" class="mb-3 d-none">
+                    <label for="detail_surat" class="form-label">Detail Surat</label>
+                    <textarea name="detail_surat" id="detail_surat" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Ajukan Surat</button>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
-@endsection
 
+<script>
+    document.getElementById('jenis_surat').addEventListener('change', function () {
+        let jenisSurat = this.value;
+        
+        document.getElementById('form-semester').classList.add('d-none');
+        document.getElementById('form-kodeMK').classList.add('d-none');
+        document.getElementById('form-namaMK').classList.add('d-none');
+        document.getElementById('form-detail').classList.add('d-none');
+
+        if (jenisSurat === "Keterangan Mahasiswa Aktif") {
+            document.getElementById('form-semester').classList.remove('d-none');
+            document.getElementById('form-detail').classList.remove('d-none');
+        } else if (jenisSurat === "Pengantar Tugas") {
+            document.getElementById('form-kodeMK').classList.remove('d-none');
+            document.getElementById('form-namaMK').classList.remove('d-none');
+            document.getElementById('form-detail').classList.remove('d-none');
+        } else if (jenisSurat === "Keterangan Lulus" || jenisSurat === "Laporan Hasil Studi") {
+            document.getElementById('form-detail').classList.remove('d-none');
+        }
+    });
+</script>
+@endsection

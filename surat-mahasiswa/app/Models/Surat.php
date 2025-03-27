@@ -19,7 +19,10 @@ class Surat extends Model
         'nrp_mahasiswa',
         'nik_kaprodi',
         'detail_surat',
-        'jenis_surat'
+        'jenis_surat',
+        'semester',
+        'kode_mk',
+        'nama_mk'
     ];
 
     public function mahasiswa()
