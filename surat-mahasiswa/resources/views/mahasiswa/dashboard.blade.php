@@ -33,18 +33,18 @@
                             <td>{{ $s->created_at->format('Y-m-d') }}</td>
                             <td>
                                 <span class="badge
-                                    @if ($s->status_surat == 'Disetujui') bg-success
-                                    @elseif ($s->status_surat == 'Ditolak') bg-danger
+                                    @if ($s->status_surat == 'disetujui') bg-success
+                                    @elseif ($s->status_surat == 'ditolak') bg-danger
                                     @else bg-secondary
                                     @endif">
                                     {{ $s->status_surat }}
                                 </span>
                             </td>
                             <td>
-                                @if ($s->status_surat == 'Disetujui')
-                                    <a href="{{ route('surat.download', $s->id) }}" class="btn btn-success btn-sm">Unduh</a>
-                                @elseif ($s->status_surat == 'Ditolak')
-                                    <a href="{{ route('surat.show', $s->id) }}" class="btn btn-warning btn-sm">Lihat Alasan</a>
+                                @if ($s->status_surat == 'diterima')
+                                <a href="{{ route('surat.download', ['id' => $s->id_surat]) }}" class="btn btn-success btn-sm">Unduh</a>
+                                @elseif ($s->status_surat == 'ditolak')
+                                <p href="{{ route('surat.show', ['id' => $s->id_surat]) }}" class="btn btn-warning btn-sm">Surat Ditolak</p
                                 @else
                                     <button class="btn btn-secondary btn-sm" disabled>Menunggu</button>
                                 @endif
