@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'userable_id',
         'userable_type',
+        'photo',
     ];
 
     /**
@@ -52,6 +53,16 @@ class User extends Authenticatable
     public function mahasiswa()
     {
         return $this->hasOne(Mahasiswa::class, 'nrp', 'userable_id');
+    }
+
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class,'nik', 'userable_id');
+    }
+
+    public function kaprodi()
+    {
+        return $this->hasOne(Kaprodi::class,'nik','userable_id');
     }
     
     public function userable()

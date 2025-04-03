@@ -25,7 +25,7 @@
 
                 <div class="mb-3">
                     <label for="jenis_surat" class="form-label">Jenis Surat</label>
-                    <select name="jenis_surat" id="jenis_surat" class="form-control" required>
+                    <select name="jenis_surat" id="jenis_surat" class="form-control" >
                         <option value="">-- Pilih Jenis Surat --</option>
                         <option value="Keterangan Mahasiswa Aktif">Surat Keterangan Mahasiswa Aktif</option>
                         <option value="Pengantar Tugas">Surat Pengantar Tugas Mata Kuliah</option>
@@ -36,27 +36,27 @@
 
                 <div id="form-nama" class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input required type="text" name="nama" id="nama" class="form-control">
+                    <input  type="text" name="nama" id="nama" class="form-control">
                 </div>
 
                 <div id="form-semester" class="mb-3 d-none">
                     <label for="semester" class="form-label">Semester</label>
-                    <input required type="number" name="semester" id="semester" class="form-control">
+                    <input  type="number" name="semester" id="semester" class="form-control">
                 </div>
 
                 <div id="form-kodeMK" class="mb-3 d-none">
                     <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>
-                    <input required type="text" name="kode_mk" id="kode_mk" class="form-control">
+                    <input  type="text" name="kode_mk" id="kode_mk" class="form-control">
                 </div>
 
                 <div id="form-namaMK" class="mb-3 d-none">
                     <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
-                    <input required type="text" name="nama_mk" id="nama_mk" class="form-control">
+                    <input  type="text" name="nama_mk" id="nama_mk" class="form-control">
                 </div>
 
                 <div id="form-detail" class="mb-3 d-none">
                     <label for="detail_surat" class="form-label">Detail Surat</label>
-                    <textarea required name="detail_surat" id="detail_surat" class="form-control" rows="3"></textarea>
+                    <textarea  name="detail_surat" id="detail_surat" class="form-control" rows="3"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Ajukan Surat</button>

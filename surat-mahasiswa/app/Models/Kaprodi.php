@@ -9,6 +9,7 @@ class Kaprodi extends Model
 {
     use HasFactory;
 
+    protected $morphClass = 'App\Models\Kaprodi'; // Menyimpan nama kelas lengkap
     protected $table = 'kaprodi'; // Pastikan nama tabel sesuai dengan yang ada di database
 
     protected $fillable = ['nik', 'nama', 'prodi', 'address', 'phone'];

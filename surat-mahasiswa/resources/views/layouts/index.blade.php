@@ -33,28 +33,90 @@
       });
     </script>
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
-
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-
-      @yield('ExtraCss')
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/fonts.min.css') }}">
+    
+        <!-- Custom CSS -->
+        <style>
+          .main-header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Ensures logo is aligned to the left */
+            padding-right: 20px; /* Adds space between the logo and text */
+          }
+        
+          .navbar-brand {
+            max-width: 200px; /* Adjust the width to avoid too large images */
+            margin-right: 20px; /* Add space between the logo and the text */
+          }
+        
+          .main-header-logo img {
+            max-width: 100%; /* Ensures logo image doesn't overflow */
+          }
+        
+          .logo-header .nav-toggle {
+            margin-left: auto; /* Ensure toggle button is pushed to the right */
+          }
+        </style>
+        
+        <!-- CSS Just for demo purpose, don't include it in your project -->
+        <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+    
+        @yield('ExtraCss')
   </head>
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-        @include('layouts.sidebar')
-      <!-- End Sidebar -->
-
-      <div class="main-panel">
-        @include('layouts.main-header')
-        @yield('content')
-        @include('layouts.footer')
-
+<div class="sidebar" data-background-color="dark">
+  <div class="sidebar-logo">
+      <div class="logo-header" data-background-color="dark">
+          <a href="index.html" class="logo">
+              <img src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
+                   alt="navbar brand"
+                   class="navbar-brand"
+                   height="20" />
+          </a>
+          <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+              </button>
+          </div>
+          <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+          </button>
       </div>
+  </div>
+
+  <div class="sidebar-wrapper scrollbar scrollbar-inner">
+      <div class="sidebar-content">
+          @if(Auth::check())
+              @if(Auth::user()->userable_type === 'App\Models\Mahasiswa')
+                  @include('mahasiswa.sidebar') <!-- Sidebar untuk mahasiswa -->
+              @elseif(Auth::user()->userable_type === 'App\Models\Kaprodi')
+                  @include('kaprodi.sidebar') <!-- Sidebar untuk Kaprodi -->
+              @elseif(Auth::user()->userable_type === 'App\Models\Karyawan')
+                  @include('karyawan.sidebar') <!-- Sidebar untuk Karyawan -->
+              @endif
+          @endif
+      </div>
+  </div>
+</div>
+<!-- End Sidebar -->
+
+<div class="main-panel">
+    @include('layouts.main-header')  <!-- Menyertakan header utama -->
+    
+    <div class="container">
+        @yield('content')  <!-- Konten halaman yang spesifik akan muncul di sini -->
+    </div>
+</div>
+
 
       <!-- Custom template | don't include it in your project! -->
       <div class="custom-template">
@@ -252,7 +314,7 @@
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script> <!-- Gunakan jQuery versi lokal -->
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 
@@ -264,6 +326,10 @@
 
     <!-- jQuery Sparkline -->
     <script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+
 
     <!-- Chart Circle -->
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>

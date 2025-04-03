@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Surat;
+use App\Models\Kaprodi;
+use App\Models\Mahasiswa;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class KaryawanController extends Controller
@@ -36,5 +39,176 @@ class KaryawanController extends Controller
         }
 
         return redirect()->route('karyawan.dashboard')->with('success', 'Surat berhasil diunggah.');
+    }
+
+    // Menampilkan daftar Kaprodi
+    public function showKaprodi()
+    {
+        $kaprodis = Kaprodi::all(); // Ambil data Kaprodi
+        return view('karyawan.kaprodi.index', compact('kaprodis'));
+    }
+
+    // Form untuk menambah Kaprodi
+    public function createKaprodi()
+    {
+        return view('karyawan.kaprodi.create'); // Tampilkan form tambah Kaprodi
+    }
+
+    // Menyimpan Kaprodi
+    public function storeKaprodi(Request $request)
+    {
+        $request->validate([
+            'nik' => 'required|unique:kaprodi,nik',
+            'nama' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+            'prodi' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email', // Validasi email agar tidak null dan unik
+        ]);
+
+        $kaprodi = Kaprodi::create([
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'prodi' => $request->prodi,
+        ]);
+
+        // Menyimpan data user yang berhubungan dengan kaprodi
+        $user = new User();
+        $user->password = bcrypt($request->password);
+        $user->userable_type = Kaprodi::class; // Menyimpan nama model lengkap dengan namespace
+        $user->userable_id = $kaprodi->nik; // Menyimpan ID kaprodi
+        $user->email = $request->email; // Menyimpan email yang diberikan dalam request
+        $user->save();
+
+        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Kaprodi berhasil ditambahkan');
+    }
+
+    // Menampilkan halaman edit untuk Kaprodi
+    public function edit($id)
+    {
+        $kaprodi = Kaprodi::findOrFail($id);
+        return view('karyawan.kaprodi.edit', compact('kaprodi'));
+    }
+
+    // Mengupdate data Kaprodi
+    public function update(Request $request, $id)
+    {
+        $kaprodi = Kaprodi::findOrFail($id);
+
+        // Validasi data jika diperlukan
+        $request->validate([
+            'nik' => 'required|unique:kaprodi,nik,' . $kaprodi->id,
+            'nama' => 'required|string|max:255',
+            'prodi' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $kaprodi->user->id, // Validasi email dengan pengecekan unik, kecuali milik user ini
+        ]);
+
+        // Update data
+        $kaprodi->update([
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'prodi' => $request->prodi,
+        ]);
+
+        // Update email user terkait
+        $kaprodi->user->update([
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil diperbarui');
+    }
+
+    // Menghapus data Kaprodi
+    public function destroy($id)
+    {
+        $kaprodi = Kaprodi::findOrFail($id);
+        $kaprodi->delete();
+
+        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil dihapus');
+    }
+
+    // Menampilkan daftar Mahasiswa
+    public function showMahasiswa()
+    {
+        $mahasiswas = Mahasiswa::all(); // Ambil data Mahasiswa
+        return view('karyawan.mahasiswa.index', compact('mahasiswas'));
+    }
+
+    // Form untuk menambah Mahasiswa
+    public function createMahasiswa()
+    {
+        return view('karyawan.mahasiswa.create'); // Tampilkan form tambah Mahasiswa
+    }
+
+    // Menyimpan Mahasiswa
+    public function storeMahasiswa(Request $request)
+    {
+        $request->validate([
+            'nrp' => 'required|unique:mahasiswa,nrp',
+            'nama' => 'required|string|max:255',
+            'prodi' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+            'email' => 'required|email|unique:users,email', // Validasi email agar tidak null dan unik
+        ]);
+
+        // Simpan data mahasiswa yang terhubung dengan userable
+        $mahasiswa = Mahasiswa::create([
+            'nrp' => $request->nrp,
+            'nama' => $request->nama,
+            'prodi' => $request->prodi,
+        ]);
+
+        // Menyimpan data user yang berhubungan dengan mahasiswa
+        $user = new User();
+        $user->password = bcrypt($request->password);
+        $user->userable_type = Mahasiswa::class; // Menyimpan nama model lengkap dengan namespace
+        $user->userable_id = $mahasiswa->nrp; // Menyimpan ID mahasiswa
+        $user->email = $request->email; // Menyimpan email yang diberikan dalam request
+        $user->save();
+
+        return redirect()->route('karyawan.mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan');
+    }
+
+    // Menampilkan halaman edit untuk Mahasiswa
+    public function editMahasiswa($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        return view('karyawan.mahasiswa.edit', compact('mahasiswa'));
+    }
+
+    // Mengupdate data Mahasiswa
+    public function updateMahasiswa(Request $request, $id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Validasi data jika diperlukan
+        $request->validate([
+            'nrp' => 'required|unique:mahasiswa,nrp,' . $mahasiswa->id,
+            'nama' => 'required|string|max:255',
+            'prodi' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $mahasiswa->user->id, // Validasi email dengan pengecekan unik, kecuali milik user ini
+        ]);
+
+        // Update data
+        $mahasiswa->update([
+            'nrp' => $request->nrp,
+            'nama' => $request->nama,
+            'prodi' => $request->prodi,
+        ]);
+
+        // Update email user terkait
+        $mahasiswa->user->update([
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('karyawan.mahasiswa.index')->with('success', 'Data Mahasiswa berhasil diperbarui');
+    }
+
+    // Menghapus data Mahasiswa
+    public function destroyMahasiswa($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa->delete();
+
+        return redirect()->route('karyawan.mahasiswa.index')->with('success', 'Data Mahasiswa berhasil dihapus');
     }
 }

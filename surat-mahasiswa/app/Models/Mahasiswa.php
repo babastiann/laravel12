@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends Model
 {
+    protected $morphClass = 'App\Models\Mahasiswa'; // Menyimpan nama kelas lengkap
     public function user()
     {
         return $this->morphOne(User::class, 'userable');

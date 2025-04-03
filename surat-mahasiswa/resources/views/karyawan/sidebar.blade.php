@@ -5,10 +5,20 @@
             <p>Dashboard</p>
         </a>
     </li>
+    
+    <!-- Link untuk Menambah Kaprodi -->
     <li class="nav-item">
-        <a href="{{ route('admin.management.index') }}">
-            <i class="fas fa-users"></i>
-            <p>Manajemen Data</p>
+        <a href="{{ route('karyawan.kaprodi.index') }}" class="nav-link">
+            <i class="fas fa-user-plus"></i>
+            <p>Tambah Kaprodi</p>
+        </a>
+    </li>
+
+    <!-- Link untuk Menambah Mahasiswa -->
+    <li class="nav-item">
+        <a href="{{ route('karyawan.mahasiswa.index') }}" class="nav-link">
+            <i class="fas fa-user-plus"></i>
+            <p>Tambah Mahasiswa</p>
         </a>
     </li>
 </ul>
