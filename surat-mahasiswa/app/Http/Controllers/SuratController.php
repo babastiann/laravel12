@@ -14,7 +14,7 @@ class SuratController extends Controller
 {
         public function index()
     {
-        $surat = Surat::all(); // Ambil semua surat
+        $surat = Surat::with('mahasiswa')->get(); // Eager loading mahasiswa
         return view('surat.index', compact('surat'));
     }
 

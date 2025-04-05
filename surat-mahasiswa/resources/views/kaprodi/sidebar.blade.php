@@ -5,10 +5,10 @@
             <p>Dashboard</p>
         </a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a href="{{ route('surat.index') }}">
             <i class="fas fa-folder"></i>
             <p>Verifikasi Surat</p>
         </a>
-    </li>
+    </li> --}}
 </ul>

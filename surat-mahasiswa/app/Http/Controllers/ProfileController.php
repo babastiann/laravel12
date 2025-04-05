@@ -67,26 +67,55 @@ class ProfileController extends Controller
 
     // ✅ Update Nama & Password
     public function updateAccount(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:6|confirmed',
-            'current_password' => 'required_with:password',
-        ]);
+{
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'password' => 'nullable|string|min:6|confirmed',
+        'current_password' => 'required_with:password',
+        'address' => 'nullable|string|max:255',
+        'phone' => 'nullable|string|max:20',
+    ]);
 
-        $user = Auth::user();
+    // Ambil user yang sedang login
+    $user = Auth::user();
 
-        // Jika mengubah password, cek apakah password lama benar
-        if ($request->filled('password')) {
-            if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
-            }
-            $user->password = Hash::make($request->password);
+    // 🔐 Update password jika diminta
+    if ($request->filled('password')) {
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
         }
 
-        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
         $user->save();
-
-        return redirect()->route('profile.myprofile')->with('success', 'Akun berhasil diperbarui!');
     }
+
+    // ✅ Update ke tabel relasi (mahasiswa/kaprodi/karyawan)
+    if ($user->userable_type === 'App\Models\Mahasiswa') {
+        // Jika user adalah mahasiswa
+        $user->mahasiswa->update([
+            'nama' => $request->nama,
+            'address' => $request->address,
+            'phone' => $request->phone,
+        ]);
+    } elseif ($user->userable_type === 'App\Models\Karyawan') {
+        // Jika user adalah karyawan (kaprodi/staff)
+        $user->karyawan->update([
+            'nama' => $request->nama,
+            'address' => $request->address,
+            'phone' => $request->phone,
+        ]);
+    } elseif ($user->userable_type === 'App\Models\Kaprodi') {
+        // Jika user adalah karyawan (kaprodi/staff)
+        $user->kaprodi->update([
+            'nama' => $request->nama,
+            'address' => $request->address,
+            'phone' => $request->phone,
+        ]);
+    }
+
+    // Redirect kembali ke halaman setting akun dengan pesan sukses
+    return redirect()->route('profile.accountsetting')->with('success', 'Akun berhasil diperbarui!');
+}
+
+    
 }

@@ -40,6 +40,9 @@
 
         <p><strong>NRP:</strong> {{ Auth::user()->userable_id }}</p>
         <p><strong>Nama:</strong> {{ Auth::user()->mahasiswa->nama }}</p>
+        <p><strong>Program Studi:</strong> {{ Auth::user()->mahasiswa->prodi }}</p>
+        <p><strong>Alamat:</strong> {{ Auth::user()->mahasiswa->address }}</p>
+        <p><strong>No. Telepon:</strong> {{ Auth::user()->mahasiswa->phone }}</p>
     </div>
 </div>
 

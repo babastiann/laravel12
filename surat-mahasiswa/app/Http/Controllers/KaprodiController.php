@@ -8,10 +8,19 @@ class KaprodiController extends Controller
 {
     // Menampilkan dashboard dengan daftar surat
     public function dashboard()
-{
-    $surat = Surat::with('mahasiswa')->get(); // Pastikan relasi mahasiswa dipanggil
+    {
+        $kaprodi = auth()->user()->kaprodi;
+        $prodi = $kaprodi->prodi;
+
+    // Ambil surat dari mahasiswa yang se-prodi
+    $surat = Surat::with('mahasiswa')
+        ->whereHas('mahasiswa', function ($query) use ($prodi) {
+            $query->where('prodi', $prodi);
+        })
+        ->get();
+
     return view('kaprodi.dashboard', compact('surat'));
-}
+    }
 
 
     // Menyetujui surat

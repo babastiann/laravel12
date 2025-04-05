@@ -1,7 +1,5 @@
 <?php
-
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\ManagementController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\Auth\AuthController;
@@ -57,19 +55,6 @@ Route::middleware(['auth', 'role:Kaprodi,Karyawan'])->group(function () {
     Route::get('/surat/download/{id}', [SuratController::class, 'download'])->name('surat.download');
 });
 
-// ✅ Route Manajemen data user (Karyawan)
-Route::prefix('karyawan')->middleware(['auth', 'role:Karyawan'])->group(function () {
-    // Route untuk Kaprodi
-    Route::get('/management/kaprodi', [ManagementController::class, 'kaprodiIndex'])->name('karyawan.management.kaprodi.index');
-    Route::post('/management/kaprodi', [ManagementController::class, 'kaprodiStore'])->name('karyawan.management.kaprodi.store');
-    Route::delete('/management/kaprodi/{id}', [ManagementController::class, 'kaprodiDestroy'])->name('karyawan.management.kaprodi.destroy');
-
-    // Route untuk Mahasiswa
-    Route::get('/management/mahasiswa', [ManagementController::class, 'mahasiswaIndex'])->name('karyawan.management.mahasiswa.index');
-    Route::post('/management/mahasiswa', [ManagementController::class, 'mahasiswaStore'])->name('karyawan.management.mahasiswa.store');
-    Route::delete('/management/mahasiswa/{id}', [ManagementController::class, 'mahasiswaDestroy'])->name('karyawan.management.mahasiswa.destroy');
-});
-
 // ✅ Route CRUD Mahasiswa (Hanya Karyawan)
 Route::middleware(['auth', 'role:Karyawan'])->group(function () {
     Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
@@ -88,8 +73,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-profile', [ProfileController::class, 'myProfile'])->name('profile.myprofile');
     Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::get('/account-setting', [ProfileController::class, 'accountSetting'])->name('profile.accountsetting');
-    Route::post('/update-account', [ProfileController::class, 'updateAccount'])->name('profile.updateAccount');
+    Route::put('/update-account', [ProfileController::class, 'updateAccount'])->name('profile.updateAccount');
 });
+
+
+
 
 // Route untuk menambah Kaprodi dan mahasiswa (Karyawan)
 Route::prefix('karyawan')->middleware('auth')->group(function () {

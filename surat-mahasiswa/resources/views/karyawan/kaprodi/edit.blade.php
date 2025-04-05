@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email', $kaprodi->user->email) }}" required>
+            <input type="email" name="email" class="form-control" value="{{ old('email', $kaprodi->email) }}" required>
         </div>
         <div class="form-group">
             <label for="prodi">Program Studi</label>

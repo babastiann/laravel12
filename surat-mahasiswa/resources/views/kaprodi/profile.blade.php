@@ -40,6 +40,9 @@
 
         <p><strong>NIK:</strong> {{ Auth::user()->userable_id }}</p>
         <p><strong>Nama:</strong> {{ Auth::user()->kaprodi->nama }}</p>
+        <p><strong>Nama:</strong> {{ Auth::user()->kaprodi->prodi }}</p>
+        <p><strong>Alamat:</strong> {{ Auth::user()->kaprodi->address }}</p>
+        <p><strong>No. Telepon:</strong> {{ Auth::user()->kaprodi->phone }}</p>
     </div>
 </div>
 

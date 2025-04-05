@@ -28,7 +28,7 @@
                     @foreach ($surat as $s)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $s->mahasiswa->nama }}</td>
+                        <td>{{ $s->mahasiswa ? $s->mahasiswa->nama : 'Data tidak tersedia' }}</td>
                         <td>{{ $s->jenis_surat }}</td>
                         <td>{{ $s->created_at->format('Y-m-d') }}</td>
                         <td>

@@ -92,29 +92,33 @@ class KaryawanController extends Controller
     // Mengupdate data Kaprodi
     public function update(Request $request, $id)
     {
-        $kaprodi = Kaprodi::findOrFail($id);
+        $kaprodi = Kaprodi::with('user')->findOrFail($id);
+        $userId = optional($kaprodi->user)->id;
 
         // Validasi data jika diperlukan
-        $request->validate([
-            'nik' => 'required|unique:kaprodi,nik,' . $kaprodi->id,
-            'nama' => 'required|string|max:255',
-            'prodi' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $kaprodi->user->id, // Validasi email dengan pengecekan unik, kecuali milik user ini
-        ]);
+    $request->validate([
+        'nik' => 'required|unique:kaprodi,nik,' . $kaprodi->id,
+        'nama' => 'required|string|max:255',
+        'prodi' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $userId, // Validasi email dengan pengecekan unik, kecuali milik user ini
+    ]);
 
-        // Update data
-        $kaprodi->update([
-            'nik' => $request->nik,
-            'nama' => $request->nama,
-            'prodi' => $request->prodi,
-        ]);
+    // Update data Kaprodi
+    $kaprodi->update([
+        'nik' => $request->nik,
+        'nama' => $request->nama,
+        'prodi' => $request->prodi,
+    ]);
 
-        // Update email user terkait
+    // Update email user terkait
+    if ($kaprodi->user) {
         $kaprodi->user->update([
             'email' => $request->email,
+            'userable_id' => $request->nik, // Update NIK di tabel users
         ]);
+    }
 
-        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil diperbarui');
+    return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil diperbarui');
     }
 
     // Menghapus data Kaprodi
@@ -178,29 +182,33 @@ class KaryawanController extends Controller
     // Mengupdate data Mahasiswa
     public function updateMahasiswa(Request $request, $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa = Mahasiswa::with('user')->findOrFail($id);
 
-        // Validasi data jika diperlukan
-        $request->validate([
-            'nrp' => 'required|unique:mahasiswa,nrp,' . $mahasiswa->id,
-            'nama' => 'required|string|max:255',
-            'prodi' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $mahasiswa->user->id, // Validasi email dengan pengecekan unik, kecuali milik user ini
-        ]);
+    // Validasi data jika diperlukan
+    $request->validate([
+        'nrp' => 'required|unique:mahasiswa,nrp,' . $mahasiswa->id,
+        'nama' => 'required|string|max:255',
+        'prodi' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . optional($mahasiswa->user)->id, // Validasi email
+    ]);
 
-        // Update data
-        $mahasiswa->update([
-            'nrp' => $request->nrp,
-            'nama' => $request->nama,
-            'prodi' => $request->prodi,
-        ]);
+    // Update data mahasiswa
+    $mahasiswa->update([
+        'nrp' => $request->nrp,
+        'nama' => $request->nama,
+        'prodi' => $request->prodi,
+    ]);
 
-        // Update email user terkait
+    // Jika ada relasi user, update email
+    if ($mahasiswa->user) {
         $mahasiswa->user->update([
             'email' => $request->email,
+            'userable_id' => $request->nrp, // Update NRP di tabel users
+            'userable_type' => Mahasiswa::class, // Pastikan userable_type tetap Mahasiswa
         ]);
+    }
 
-        return redirect()->route('karyawan.mahasiswa.index')->with('success', 'Data Mahasiswa berhasil diperbarui');
+    return redirect()->route('karyawan.mahasiswa.index')->with('success', 'Data Mahasiswa berhasil diperbarui');
     }
 
     // Menghapus data Mahasiswa

@@ -27,7 +27,7 @@ class Surat extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class, 'nrp_mahasiswa', 'nrp');
+        return $this->belongsTo(\App\Models\Mahasiswa::class, 'nrp_mahasiswa', 'nrp');
     }
 
 }

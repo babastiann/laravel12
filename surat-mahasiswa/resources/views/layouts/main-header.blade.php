@@ -106,7 +106,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('profile.myprofile') }}">My Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="{{ route('profile.accountsetting') }}">Account Setting</a>
                         <div class="dropdown-divider"></div>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
