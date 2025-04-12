@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label for="prodi">Program Studi</label>
-            <input type="text" name="prodi" class="form-control" id="prodi" required>
+            <input type="text" name="prodi" class="form-control" id="prodi" value="{{ auth()->user()->karyawan->prodi }}" required readonly>
         </div>
         <button type="submit" class="btn btn-primary">Tambah Kaprodi</button>
     </form>

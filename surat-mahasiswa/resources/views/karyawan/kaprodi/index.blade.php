@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2>Daftar Kaprodi</h2>
+    <h2>Daftar Kaprodi - Prodi {{ auth()->user()->prodi }}</h2>
     
     <!-- Tombol untuk menampilkan form -->
     <a href="{{ route('karyawan.kaprodi.create') }}" class="btn btn-primary mb-3">Tambah Data Kaprodi</a>
@@ -24,7 +24,7 @@
                     <td>{{ $kaprodi->prodi }}</td>
                     <td>
                         <a href="{{ route('karyawan.kaprodi.edit', $kaprodi->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('karyawan.kaprodi.destroy', $kaprodi->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('karyawan.kaprodi.destroy', $kaprodi->id) }}" method="POST" style="display:inline;" class="form-delete d-inline" data-nama="{{ $kaprodi->nama }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -62,13 +62,10 @@
                         <input type="password" name="password" class="form-control" id="password" required>
                     </div>
                     <div class="form-group">
-                        <label for="prodi">Program Studi</label>
-                        <input type="text" name="prodi" class="form-control" id="prodi" required>
-                    </div>
-                    <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" class="form-control" id="email" required>
                     </div>
+                    <!-- Kolom prodi dihilangkan karena akan diambil otomatis dari auth()->user()->prodi -->
                     <button type="submit" class="btn btn-primary">Tambah Kaprodi</button>
                 </form>
             </div>
@@ -76,4 +73,34 @@
     </div>
 </div>
 
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteForms = document.querySelectorAll('.form-delete');
+
+        deleteForms.forEach(function(form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const nama = form.getAttribute('data-nama');
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: `Data kaprodi "${nama}" akan dihapus!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush
 @endsection

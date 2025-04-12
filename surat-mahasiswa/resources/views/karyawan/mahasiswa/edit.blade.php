@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="prodi">Program Studi</label>
-            <input type="text" name="prodi" class="form-control" value="{{ old('prodi', $mahasiswa->prodi) }}" required>
+            <input type="text" name="prodi" class="form-control" value="{{ old('prodi', $mahasiswa->prodi) }}" readonly required>
         </div>
         <button type="submit" class="btn btn-primary">Update Mahasiswa</button>
     </form>

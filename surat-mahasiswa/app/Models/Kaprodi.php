@@ -16,6 +16,6 @@ class Kaprodi extends Model
 
     public function user()
     {
-        return $this->morphOne(User::class, 'userable');
+        return $this->morphOne(User::class, 'userable', 'userable_type', 'userable_id', 'nik');
     }
 }

@@ -11,7 +11,7 @@ class Mahasiswa extends Model
     protected $morphClass = 'App\Models\Mahasiswa'; // Menyimpan nama kelas lengkap
     public function user()
     {
-        return $this->morphOne(User::class, 'userable');
+        return $this->morphOne(User::class, 'userable', 'userable_type', 'userable_id', 'nrp');
     }
 
     use HasFactory;

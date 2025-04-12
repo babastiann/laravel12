@@ -13,7 +13,7 @@ class Karyawan extends Model
     }
 
     use HasFactory;
-
+    protected $morphClass = 'App\Models\Karyawan'; // Menyimpan nama kelas lengkap
     protected $table = 'karyawan'; // Pastikan ini sesuai dengan nama tabel di database
 
     protected $fillable = [

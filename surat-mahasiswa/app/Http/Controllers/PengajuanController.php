@@ -22,6 +22,11 @@ class PengajuanController extends Controller
             'detail_surat' => 'required',
         ]);
 
+        // Check if the mahasiswa exists
+        if (!Mahasiswa::where('nrp', auth()->user()->userable_id)->exists()) {
+            return redirect()->back()->withErrors(['nrp' => 'Mahasiswa tidak ditemukan.']);
+        }
+
         Surat::create([
             'tanggal_surat' => now(),
             'status_surat' => 'diajukan',

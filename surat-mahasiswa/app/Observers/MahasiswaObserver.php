@@ -13,14 +13,22 @@ class MahasiswaObserver
      */
     public function created(Mahasiswa $mahasiswa)
     {
-        $user = User::create([
-            'email' => strtolower(str_replace(' ', '', $mahasiswa->nama)) . '@example.com',
-            'password' => Hash::make('password123'),
-            'userable_id' => $mahasiswa->nrp, // Isi dengan NRP
-            'userable_type' => 'Mahasiswa',
-        ]);
+        // // Cek apakah sudah ada User dengan userable_id yang sama
+        // $existingUser = User::where('userable_id', $mahasiswa->nrp)
+        //                     ->where('userable_type', \App\Models\Mahasiswa::class)
+        //                     ->first();
 
+        // if (!$existingUser) {
+        //     // Jika belum ada, buat User baru
+        //     User::create([
+        //         'email' => strtolower(str_replace(' ', '', $mahasiswa->email)), // Pastikan email terformat dengan benar
+        //         'password' => Hash::make('password123'), // Password default
+        //         'userable_id' => $mahasiswa->nrp,
+        //         'userable_type' => \App\Models\Mahasiswa::class,
+        //     ]);
+        // }
     }
+
 
     /**
      * Handle the Mahasiswa "updated" event.
@@ -35,7 +43,14 @@ class MahasiswaObserver
      */
     public function deleted(Mahasiswa $mahasiswa): void
     {
-        //
+         // Jika mahasiswa dihapus, hapus user terkait (jika ada)
+         $existingUser = User::where('userable_id', $mahasiswa->nrp)
+         ->where('userable_type', \App\Models\Mahasiswa::class)
+         ->first();
+
+        if ($existingUser) {
+            $existingUser->delete();
+        }
     }
 
     /**

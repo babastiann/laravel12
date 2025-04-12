@@ -36,14 +36,8 @@ class MahasiswaController extends Controller
             'phone' => $request->phone
         ]);
 
-        // Simpan data user ke tabel users
-        User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password), // Enkripsi password
-            'userable_id' => $mahasiswa->nrp,
-            'userable_type' => 'Mahasiswa'
-        ]);
-
         return redirect()->route('karyawan.dashboard')->with('success', 'Mahasiswa berhasil ditambahkan!');
     }
+
+
 }

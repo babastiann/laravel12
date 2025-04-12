@@ -8,7 +8,7 @@
         <div class="form-group">
             <label for="nrp">NRP</label>
             <input type="text" name="nrp" class="form-control" id="nrp" required>
-        </div>      
+        </div>
         <div class="form-group">
             <label for="nama">Nama</label>
             <input type="text" name="nama" class="form-control" id="nama" required>
@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label for="prodi">Program Studi</label>
-            <input type="text" name="prodi" class="form-control" id="prodi" required>
+            <input type="text" name="prodi" class="form-control" id="prodi" value="{{ auth()->user()->karyawan->prodi }}" required readonly>
         </div>
         <button type="submit" class="btn btn-primary">Tambah Mahasiswa</button>
     </form>

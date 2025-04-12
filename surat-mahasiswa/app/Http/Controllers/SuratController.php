@@ -15,6 +15,7 @@ class SuratController extends Controller
         public function index()
     {
         $surat = Surat::with('mahasiswa')->get(); // Eager loading mahasiswa
+        dd($surat);
         return view('surat.index', compact('surat'));
     }
 

@@ -19,6 +19,7 @@
                         <th>No</th>
                         <th>Mahasiswa</th>
                         <th>Jenis Surat</th>
+                        <th>Keterangan</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -26,10 +27,12 @@
                 </thead>
                 <tbody>
                     @foreach ($surat as $s)
+                    @dd($s) <!-- Debugging untuk melihat isi objek $s -->
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $s->mahasiswa ? $s->mahasiswa->nama : 'Data tidak tersedia' }}</td>
                         <td>{{ $s->jenis_surat }}</td>
+                        <td>{{ $s->detail_surat }}</td>
                         <td>{{ $s->created_at->format('Y-m-d') }}</td>
                         <td>
                             <span class="badge

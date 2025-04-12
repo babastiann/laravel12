@@ -42,6 +42,7 @@
         <p><strong>Nama:</strong> {{ Auth::user()->karyawan->nama }}</p>
         <p><strong>Alamat:</strong> {{ Auth::user()->karyawan->address }}</p>
         <p><strong>No. Telepon:</strong> {{ Auth::user()->karyawan->phone }}</p>
+        <p><strong>Prodi:</strong> {{ Auth::user()->karyawan->prodi }}</p>
     </div>
 </div>
 
