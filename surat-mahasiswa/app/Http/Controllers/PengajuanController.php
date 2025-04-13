@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kaprodi;
 use App\Models\Surat;
+use App\Models\Mahasiswa;
+
 
 // untuk mengajukan surat mahasiswa
 class PengajuanController extends Controller
@@ -31,7 +33,7 @@ class PengajuanController extends Controller
             'tanggal_surat' => now(),
             'status_surat' => 'diajukan',
             'nrp_mahasiswa' => auth()->user()->userable_id,
-            'nama' => $request->nama,
+            'nama' => auth()->user()->mahasiswa->nama,
             'jenis_surat' => $request->jenis_surat,
             'detail_surat' => $request->detail_surat,
             'semester' => $request->semester,

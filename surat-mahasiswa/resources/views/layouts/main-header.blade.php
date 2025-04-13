@@ -4,7 +4,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
                 <img
-                  src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
+                  src="{{ asset('assets/img/kaiadmin/LogoSidebar.png') }}"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -75,9 +75,11 @@
                   >
                     <div class="avatar-sm">
                       <img
-                      class="main-header-profile-photo rounded-circle"
+                      class="main-header-profile-photo "
                       src="{{ asset('storage/profile_photos/' . (Auth::user()->photo ?? 'default.jpg')) }}"
-                      width="50" />                   
+                      width="50"
+                      height="30"
+                      style="padding-right: 15px;" />                   
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>

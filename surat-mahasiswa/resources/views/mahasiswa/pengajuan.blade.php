@@ -34,15 +34,15 @@
                     </select>
                 </div>
 
-                <div id="form-nama" class="mb-3">
-                    <label for="nama" class="form-label">Nama</label>
-                    <input  type="text" name="nama" id="nama" class="form-control">
-                </div>
-
                 <div id="form-semester" class="mb-3 d-none">
                     <label for="semester" class="form-label">Semester</label>
-                    <input  type="number" name="semester" id="semester" class="form-control">
+                    <select name="semester" id="semester" class="form-control">
+                        <option value="">-- Pilih Semester --</option>
+                        <option value="Ganjil">Ganjil</option>
+                        <option value="Genap">Genap</option>
+                    </select>
                 </div>
+                
 
                 <div id="form-kodeMK" class="mb-3 d-none">
                     <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>

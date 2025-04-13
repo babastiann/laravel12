@@ -115,44 +115,47 @@ class KaryawanController extends Controller
 
     // Mengupdate data Kaprodi
     public function update(Request $request, $id)
-    {
-        $kaprodi = Kaprodi::with('user')->findOrFail($id);
-        $userId = optional($kaprodi->user)->id;
-
-        // Validasi data jika diperlukan
-    $request->validate([
-        'nik' => 'required|unique:kaprodi,nik,' . $kaprodi->id,
-        'nama' => 'required|string|max:255',
-        'prodi' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $userId, // Validasi email dengan pengecekan unik, kecuali milik user ini
-    ]);
-
-    // Update data Kaprodi
-    $kaprodi->update([
-        'nik' => $request->nik,
-        'nama' => $request->nama,
-        'prodi' => $request->prodi,
-    ]);
-
-    // Update email user terkait
-    if ($kaprodi->user) {
-        $kaprodi->user->update([
-            'email' => $request->email,
-            'userable_id' => $request->nik, // Update NIK di tabel users
+    {   
+        $request->validate([
+            'nik' => 'required',
+            'nama' => 'required',
+            'prodi' => 'required',
+            'email' => 'required|email',
         ]);
-    }
 
-    return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil diperbarui');
+        $kaprodi = Kaprodi::with('user')->findOrFail($id);
+
+        // Update data Kaprodi
+        $kaprodi->update([
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'prodi' => $request->prodi,
+        ]);
+
+        // Update email user terkait
+        if ($kaprodi->user) {
+            $kaprodi->user->email = $request->email;
+            $kaprodi->user->userable_id = $request->nik;
+            $kaprodi->user->save();
+        }
+
+        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil diperbarui');
     }
 
     // Menghapus data Kaprodi
-    public function destroy($id)
-    {
-        $kaprodi = Kaprodi::findOrFail($id);
+    public function destroy($id){
+        $kaprodi = Kaprodi::with('user')->findOrFail($id);
+
+        // Hapus user yang terhubung (jika ada)
+        if ($kaprodi->user) {
+            $kaprodi->user->delete();
+        }
+
         $kaprodi->delete();
 
-        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi berhasil dihapus');
+        return redirect()->route('karyawan.kaprodi.index')->with('success', 'Data Kaprodi dan user berhasil dihapus');
     }
+
 
 
     // Menampilkan daftar Mahasiswa

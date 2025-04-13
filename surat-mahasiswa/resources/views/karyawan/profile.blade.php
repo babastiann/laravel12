@@ -10,7 +10,8 @@
                  src="{{ asset('storage/profile_photos/' . Auth::user()->photo) }}" 
                  alt="Profile Photo" 
                  class="rounded-circle" 
-                 width="150" 
+                 width="200"
+                 height="200" 
                  style="cursor: pointer;" 
                  data-bs-toggle="modal" 
                  data-bs-target="#photoModal">

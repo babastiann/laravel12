@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f8ff; /* Warna latar belakang soft */
+            background-color: #ffffff; /* Warna latar belakang soft */
         }
         .login-container {
             margin-top: 100px;
@@ -40,6 +40,12 @@
             <div class="col-md-4">
                 <div class="card shadow-lg">
                     <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="{{ asset('assets/img/kaiadmin/LogoLoginCopy.png') }}" 
+                                 alt="Logo" 
+                                 class="img-fluid rounded" 
+                                 style="max-width: 200px; border-radius: 20px;">
+                        </div>                        
                         <form action="{{ route('login.post') }}" method="POST">
                             @csrf
                             <div class="mb-3">
