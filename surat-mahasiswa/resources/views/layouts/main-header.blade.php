@@ -100,7 +100,7 @@
                           </div>
                           <div class="u-text">
                             <h4>{{ Auth::user()->mahasiswa->nama ?? Auth::user()->kaprodi->nama ?? Auth::user()->karyawan->nama ?? 'Nama tidak ditemukan' }}</h4>
-                            <p class="text-muted">{{ Auth::user()->mahasiswa->nama ?? Auth::user()->kaprodi->nama ?? Auth::user()->karyawan->nama ?? 'Nama tidak ditemukan' }}@gmail.com</p>
+                            <p class="text-muted">{{ Auth::user()->email ?? 'Email tidak ditemukan' }}</p>
                           </div>
                         </div>
                       </li>
@@ -124,6 +124,4 @@
             </div>
           </nav>
           <!-- End Navbar -->
-
-
         </div>

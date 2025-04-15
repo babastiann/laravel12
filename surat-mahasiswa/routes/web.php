@@ -33,6 +33,11 @@ Route::middleware(['auth', 'role:Mahasiswa'])->group(function () {
     Route::get('/pengajuan/create', [PengajuanController::class, 'create'])->name('pengajuan.create');
     Route::post('/pengajuan', [PengajuanController::class, 'store'])->name('pengajuan.store');
     Route::get('/surat/download/{id}', [SuratController::class, 'download'])->name('surat.download');
+    // 🔹 Surat: Edit dan Hapus (jika status diajukan atau ditolak)
+    Route::get('/surat/{id}/edit', [PengajuanController::class, 'edit'])->name('surat.edit');
+    Route::put('/surat/{id}', [PengajuanController::class, 'update'])->name('surat.update');
+    Route::delete('/surat/{id}', [PengajuanController::class, 'destroy'])->name('surat.destroy');
+
 });
 
 // ✅ Dashboard Kaprodi
@@ -67,6 +72,7 @@ Route::middleware(['auth', 'role:Karyawan'])->group(function () {
 // mengunduh surat
 Route::post('/pengajuan', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/surat/download/{id}', [SuratController::class, 'download'])->name('surat.download');
+
 
 // Edit profile dan account setting
 Route::middleware('auth')->group(function () {
