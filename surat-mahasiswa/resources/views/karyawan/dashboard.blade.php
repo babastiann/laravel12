@@ -32,11 +32,17 @@
                             </a>
                         </td>
                         <td>
-                            <form action="{{ route('karyawan.upload', ['id' => $s->id_surat]) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="file" name="file_surat" class="form-control" required>
-                                <button type="submit" class="btn btn-primary btn-sm mt-2">Upload</button>
-                            </form>
+                            @if ($s->file_surat)
+                                <!-- Jika sudah ada file, tampilkan link untuk melihat file -->
+                                <a href="{{ asset('storage/surat/'.$s->file_surat) }}" class="btn btn-success btn-sm mt-2" target="_blank">Lihat Surat</a>
+                            @else
+                                <!-- Jika belum di-upload, tampilkan form upload -->
+                                <form action="{{ route('karyawan.upload', ['id' => $s->id_surat]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="file" name="file_surat" class="form-control" required>
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Upload</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
 

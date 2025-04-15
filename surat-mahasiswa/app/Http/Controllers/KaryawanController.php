@@ -24,7 +24,6 @@ class KaryawanController extends Controller
         // dan hanya untuk surat yang prodi-nya sesuai dengan prodi karyawan yang login
         $surat = Surat::with('mahasiswa')
             ->where('status_surat', 'diterima')
-            ->whereNull('file_surat')
             ->whereHas('mahasiswa', function ($query) use ($prodi) {
                 $query->where('prodi', $prodi); // Filter berdasarkan prodi
             })
